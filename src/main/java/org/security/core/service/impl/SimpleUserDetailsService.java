@@ -32,10 +32,11 @@ public class SimpleUserDetailsService implements UserDetailsService {
         simpleUserDetails.setAccountNonLocked(true);
         final Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         simpleUserDetails.setAuthorities(authorities);
         simpleUserDetails.setCredentialsNonExpired(true);
         simpleUserDetails.setEnabled(true);
-        simpleUserDetails.setPassword("password");
+        simpleUserDetails.setPassword("system");
         simpleUserDetails.setUsername(username);
 
         LOGGER.debug("user : {}", simpleUserDetails);

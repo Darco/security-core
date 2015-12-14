@@ -32,6 +32,18 @@ public class HelloController {
 
 	}
 
+	@RequestMapping(value = "/user**", method = RequestMethod.GET)
+    public ModelAndView userPage() {
+
+        ModelAndView model = new ModelAndView();
+        model.addObject("title", "Spring Security Custom Login Form");
+        model.addObject("message", "This is protected page!");
+        model.setViewName("user");
+
+        return model;
+
+    }
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout) {

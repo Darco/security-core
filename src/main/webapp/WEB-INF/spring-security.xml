@@ -6,24 +6,30 @@
 	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
 	<http auto-config="true">
-		<intercept-url pattern="/admin**" access="ROLE_USER" />
+	    <intercept-url pattern="/user**" access="ROLE_USER"/>
+		<intercept-url pattern="/admin**" access="ROLE_ADMIN" />
 
 		<form-login login-page="/login" default-target-url="/welcome"
 			authentication-failure-url="/login?error" username-parameter="username"
 			password-parameter="password" />
-		<logout logout-success-url="/login?logout" />
+		<logout logout-success-url="/login?logout" delete-cookies="JSESSIONID" />
 		<!-- enable csrf protection -->
 		<csrf />
 		<!-- Security headers -->
 		<headers>
 			<frame-options policy="SAMEORIGIN" />
 		</headers>
+		<session-management invalid-session-url="/invalid">
+			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+		</session-management>
 	</http>
 
-	<beans:bean id="simpleUserDetailsService" class="org.security.core.service.impl.SimpleUserDetailsService"/>
+	<beans:bean id="simpleUserDetailsService"
+		class="org.security.core.service.impl.SimpleUserDetailsService" />
 
-	<beans:bean id="simpleAuthenticationProvider" class="org.security.core.authentication.SimpleAuthenticationProvider">
-	   <beans:property name="userDetailsService" ref="simpleUserDetailsService" />
+	<beans:bean id="simpleAuthenticationProvider"
+		class="org.security.core.authentication.SimpleAuthenticationProvider">
+		<beans:property name="userDetailsService" ref="simpleUserDetailsService" />
 	</beans:bean>
 
 	<authentication-manager erase-credentials="true">

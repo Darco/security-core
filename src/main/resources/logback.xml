@@ -1,16 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+	<appender name="APP" class="ch.qos.logback.core.FileAppender">
 		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder
 			by default -->
+		<file>/opt/logs/org/security/APP.log</file>
 		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
 			</pattern>
 		</encoder>
 	</appender>
 
+	<appender name="SPRING" class="ch.qos.logback.core.FileAppender">
+		<file>/opt/logs/org/security/SPRING.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="org.springframework">
+		<appender-ref ref="SPRING" />
+	</logger>
+
+	<logger name="org.security">
+		<appender-ref ref="APP" />
+	</logger>
+
 	<root level="debug">
-		<appender-ref ref="STDOUT" />
+		<appender-ref ref="APP" />
+		<appender-ref ref="SPRING" />
 	</root>
 </configuration>
